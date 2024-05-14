@@ -1,20 +1,9 @@
 import Ship from './ship';
 
-function Node() {
-  let type = 'empty';
-  let data = null;
-  let isHit = false;
-
-  return {
-    type,
-    data,
-    isHit,
-  };
-}
-
 export default function Gameboard(rows = 10, cols = 10) {
   const gameboard = [];
   const hitCoordinate = [];
+  const missedAttacks = [];
 
   for (let i = 0; i < rows; i++) {
     gameboard.push([]);
@@ -95,6 +84,7 @@ export default function Gameboard(rows = 10, cols = 10) {
 
     if (gameboard[x][y] === null) {
       gameboard[x][y] = 'missed';
+      missedAttacks.push(coordinate);
     } else {
       gameboard[x][y].hit();
 
@@ -106,24 +96,10 @@ export default function Gameboard(rows = 10, cols = 10) {
     }
   }
 
-  function getMissedAttacks() {
-    const missedAttacks = [];
-
-    gameboard.forEach((row, rowIndex) => {
-      row.forEach((node, colIndex) => {
-        if (node === 'missed') {
-          missedAttacks.push([rowIndex, colIndex]);
-        }
-      });
-    });
-
-    return missedAttacks;
-  }
-
   return {
     gameboard,
     placeShip,
     receiveAttack,
-    getMissedAttacks,
+    getMissedAttacks: () => missedAttacks,
   };
 }
