@@ -100,3 +100,19 @@ test('Attack same coordinate twice', () => {
   expect(gameboard.gameboard[1][3].getHitCount()).toBe(1);
   expect(gameboard.gameboard[1][4].getHitCount()).toBe(1);
 });
+
+test('Get missed attacks', () => {
+  const gameboard = Gameboard();
+  const ship3 = Ship(3);
+  gameboard.placeShip(ship3, [1, 2]);
+  gameboard.receiveAttack([0, 1]);
+  gameboard.receiveAttack([0, 2]);
+  gameboard.receiveAttack([1, 2]);
+  gameboard.receiveAttack([1, 3]);
+  gameboard.receiveAttack([2, 3]);
+  expect(gameboard.getMissedAttacks()).toEqual([
+    [0, 1],
+    [0, 2],
+    [2, 3],
+  ]);
+});
