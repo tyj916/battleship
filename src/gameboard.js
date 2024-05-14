@@ -9,7 +9,7 @@ export default function Gameboard(rows = 10, cols = 10) {
     }
   }
 
-  function placeShip(ship, coordinate) {
+  function placeShip(ship, coordinate, direction = 'horizontal') {
     const x = coordinate[0];
     const y = coordinate[1];
     const shipLength = ship.length;
@@ -18,7 +18,11 @@ export default function Gameboard(rows = 10, cols = 10) {
     if (x + shipLength >= 10 || y + shipLength >= 10) return;
 
     for (let i = 0; i < shipLength; i++) {
-      gameboard[x][y + i] = ship;
+      if (direction === 'horizontal') {
+        gameboard[x][y + i] = ship;
+      } else {
+        gameboard[x + i][y] = ship;
+      }
     }
   }
 

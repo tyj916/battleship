@@ -37,3 +37,13 @@ test('Collapse ship coordinate', () => {
   expect(gameboard.gameboard[1][5]).toEqual(ship5);
   expect(gameboard.gameboard[1][6]).toEqual(ship5);
 });
+
+test('Place ship vertically', () => {
+  const gameboard = Gameboard();
+  const ship3 = Ship(3);
+  gameboard.placeShip(ship3, [1, 2], 'vertical');
+
+  expect(gameboard.gameboard[1][2]).toEqual(ship3);
+  expect(gameboard.gameboard[2][2]).toEqual(ship3);
+  expect(gameboard.gameboard[3][2]).toEqual(ship3);
+});
