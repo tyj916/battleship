@@ -1,5 +1,6 @@
 export default function Gameboard(rows = 10, cols = 10) {
   const gameboard = [];
+  const hitCoordinate = [];
 
   for (let i = 0; i < rows; i++) {
     gameboard.push([]);
@@ -45,13 +46,32 @@ export default function Gameboard(rows = 10, cols = 10) {
     }
   }
 
+  function isHitBefore(coordinate) {
+    const x = coordinate[0];
+    const y = coordinate[1];
+
+    for (let i = 0; i < hitCoordinate.length; i++) {
+      if (hitCoordinate[i][0] === x && hitCoordinate[i][1] === y) {
+        return true;
+      }
+    }
+
+    return false;
+  }
+
   function receiveAttack(coordinate) {
+    if (isHitBefore(coordinate)) return;
+
     const x = coordinate[0];
     const y = coordinate[1];
 
     if (gameboard[x][y] === null) {
       gameboard[x][y] = 'missed';
+    } else {
+      gameboard[x][y].hit();
     }
+
+    hitCoordinate.push(coordinate);
   }
 
   return {

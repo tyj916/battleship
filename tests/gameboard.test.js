@@ -77,3 +77,26 @@ test('Receive attack at target empty coordinate', () => {
 
   expect(gameboard.gameboard[1][2]).toBe('missed');
 });
+
+test('Receive attack at target coordinate with ship', () => {
+  const gameboard = Gameboard();
+  const ship3 = Ship(3);
+  gameboard.placeShip(ship3, [1, 2]);
+  gameboard.receiveAttack([1, 2]);
+
+  expect(gameboard.gameboard[1][2].getHitCount()).toBe(1);
+  expect(gameboard.gameboard[1][3].getHitCount()).toBe(1);
+  expect(gameboard.gameboard[1][4].getHitCount()).toBe(1);
+});
+
+test('Attack same coordinate twice', () => {
+  const gameboard = Gameboard();
+  const ship3 = Ship(3);
+  gameboard.placeShip(ship3, [1, 2]);
+  gameboard.receiveAttack([1, 2]);
+  gameboard.receiveAttack([1, 2]);
+
+  expect(gameboard.gameboard[1][2].getHitCount()).toBe(1);
+  expect(gameboard.gameboard[1][3].getHitCount()).toBe(1);
+  expect(gameboard.gameboard[1][4].getHitCount()).toBe(1);
+});
