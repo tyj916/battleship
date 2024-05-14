@@ -45,8 +45,18 @@ export default function Gameboard(rows = 10, cols = 10) {
     }
   }
 
+  function receiveAttack(coordinate) {
+    const x = coordinate[0];
+    const y = coordinate[1];
+
+    if (gameboard[x][y] === null) {
+      gameboard[x][y] = 'missed';
+    }
+  }
+
   return {
     gameboard,
     placeShip,
+    receiveAttack,
   };
 }

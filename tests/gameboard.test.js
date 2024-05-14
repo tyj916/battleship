@@ -70,3 +70,10 @@ test('Place ship vertically', () => {
   expect(gameboard.gameboard[2][2]).toEqual(ship3);
   expect(gameboard.gameboard[3][2]).toEqual(ship3);
 });
+
+test('Receive attack at target empty coordinate', () => {
+  const gameboard = Gameboard();
+  gameboard.receiveAttack([1, 2]);
+
+  expect(gameboard.gameboard[1][2]).toBe('missed');
+});
