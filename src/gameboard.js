@@ -14,6 +14,7 @@ export default function Gameboard(rows = 10, cols = 10) {
     const y = coordinate[1];
     const shipLength = ship.length;
 
+    if (gameboard[x][y] !== null) return;
     if (x + shipLength >= 10 || y + shipLength >= 10) return;
 
     for (let i = 0; i < shipLength; i++) {

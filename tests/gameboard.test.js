@@ -23,3 +23,17 @@ test('Place a ship length out of the gameboard', () => {
   expect(gameboard.gameboard[1][6]).not.toEqual(ship5);
   expect(gameboard.gameboard[1][6]).toBeNull();
 });
+
+test('Collapse ship coordinate', () => {
+  const gameboard = Gameboard();
+  const ship5 = Ship(5);
+  const ship3 = Ship(3);
+  gameboard.placeShip(ship5, [1, 2]);
+  gameboard.placeShip(ship3, [1, 2]);
+
+  expect(gameboard.gameboard[1][2]).toEqual(ship5);
+  expect(gameboard.gameboard[1][3]).toEqual(ship5);
+  expect(gameboard.gameboard[1][4]).toEqual(ship5);
+  expect(gameboard.gameboard[1][5]).toEqual(ship5);
+  expect(gameboard.gameboard[1][6]).toEqual(ship5);
+});
