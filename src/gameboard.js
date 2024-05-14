@@ -1,3 +1,17 @@
+import Ship from './ship';
+
+function Node() {
+  let type = 'empty';
+  let data = null;
+  let isHit = false;
+
+  return {
+    type,
+    data,
+    isHit,
+  };
+}
+
 export default function Gameboard(rows = 10, cols = 10) {
   const gameboard = [];
   const hitCoordinate = [];
@@ -59,8 +73,22 @@ export default function Gameboard(rows = 10, cols = 10) {
     return false;
   }
 
+  function isAllShipsSunk() {
+    for (let i = 0; i < gameboard.length; i++) {
+      for (let j = 0; j < gameboard[i].length; j++) {
+        if (gameboard[i][j] instanceof Ship && !gameboard[i][j].isSunk()) {
+          return false;
+        }
+      }
+    }
+
+    return true;
+  }
+
   function receiveAttack(coordinate) {
     if (isHitBefore(coordinate)) return;
+
+    hitCoordinate.push(coordinate);
 
     const x = coordinate[0];
     const y = coordinate[1];
@@ -69,9 +97,13 @@ export default function Gameboard(rows = 10, cols = 10) {
       gameboard[x][y] = 'missed';
     } else {
       gameboard[x][y].hit();
-    }
 
-    hitCoordinate.push(coordinate);
+      if (gameboard[x][y].isSunk()) {
+        if (isAllShipsSunk()) {
+          console.log('All ships sunk');
+        }
+      }
+    }
   }
 
   function getMissedAttacks() {

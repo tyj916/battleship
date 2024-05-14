@@ -116,3 +116,25 @@ test('Get missed attacks', () => {
     [2, 3],
   ]);
 });
+
+test('All ships sunk', () => {
+  const gameboard = Gameboard();
+  const ship3 = Ship(3);
+  const ship5 = Ship(5);
+  gameboard.placeShip(ship3, [1, 2]);
+  gameboard.placeShip(ship5, [2, 2], 'vertical');
+  gameboard.receiveAttack([0, 1]);
+  gameboard.receiveAttack([0, 2]);
+  gameboard.receiveAttack([1, 2]);
+  gameboard.receiveAttack([1, 3]);
+  gameboard.receiveAttack([1, 4]);
+  gameboard.receiveAttack([2, 2]);
+  gameboard.receiveAttack([3, 2]);
+  gameboard.receiveAttack([4, 2]);
+  gameboard.receiveAttack([5, 2]);
+  gameboard.receiveAttack([6, 2]);
+  expect(gameboard.getMissedAttacks()).toEqual([
+    [0, 1],
+    [0, 2],
+  ]);
+});
