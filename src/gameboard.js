@@ -32,13 +32,13 @@ export default function Gameboard(rows = 10, cols = 10) {
     const shipLength = ship.length;
 
     // if target coordinate out of board
-    if (x < 0 || x >= 10 || y < 0 || y >= 10) return;
+    if (x < 0 || x >= rows || y < 0 || y >= cols) return;
 
     // if target path has ship
     if (!isPathClear(shipLength, x, y, direction)) return;
 
     // if ship length is too long for the board
-    if (x + shipLength >= 10 || y + shipLength >= 10) return;
+    if (x + shipLength >= rows || y + shipLength >= cols) return;
 
     for (let i = 0; i < shipLength; i++) {
       if (direction === 'horizontal') {
