@@ -1,0 +1,54 @@
+body {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+header {
+  width: 100%;
+  border-bottom: 2px solid silver;
+}
+
+header h1 {
+  margin-left: 16px;
+}
+
+main {
+  flex: 1;
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.game-container {
+  display: flex;
+  justify-content: center;
+  gap: 32px;
+  width: 100%;
+}
+
+.player-container p{
+  text-align: center;
+}
+
+.gameboard {
+  width: 300px;
+  height: 300px;
+  display: flex;
+  flex-direction: column;
+  border: 2px solid skyblue;
+}
+
+.row {
+  flex: 1;
+  display: flex;
+}
+
+.node {
+  flex: 1;
+  border: 1px solid skyblue;
+}
