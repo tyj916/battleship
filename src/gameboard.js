@@ -74,6 +74,10 @@ export default function Gameboard(rows = 10, cols = 10) {
     return true;
   }
 
+  function reportAllShipsSunk() {
+    console.log('All ships sunk');
+  }
+
   function receiveAttack(coordinate) {
     if (isHitBefore(coordinate)) return;
 
@@ -88,10 +92,8 @@ export default function Gameboard(rows = 10, cols = 10) {
     } else {
       gameboard[x][y].hit();
 
-      if (gameboard[x][y].isSunk()) {
-        if (isAllShipsSunk()) {
-          console.log('All ships sunk');
-        }
+      if (gameboard[x][y].isSunk() && isAllShipsSunk()) {
+        reportAllShipsSunk();
       }
     }
   }
