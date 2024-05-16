@@ -13,35 +13,6 @@ export default function Gameboard(rows = 10, cols = 10) {
     }
   }
 
-  function render(container) {
-    const gameboardEl = document.createElement('div');
-    gameboardEl.classList.add('gameboard');
-
-    for (let i = 0; i < rows; i++) {
-      const row = document.createElement('div');
-      row.classList.add('row');
-
-      for (let j = 0; j < cols; j++) {
-        const node = document.createElement('div');
-        node.classList.add('node');
-
-        if (gameboard[i][j] instanceof Object) {
-          node.classList.add('ship');
-        }
-
-        if (gameboard[i][j] === 'missed') {
-          node.classList.add('missed');
-        }
-
-        row.appendChild(node);
-      }
-
-      gameboardEl.appendChild(row);
-    }
-
-    container.appendChild(gameboardEl);
-  }
-
   function isPathClear(shipLength, x, y, direction) {
     for (let i = 0; i < shipLength; i++) {
       if (direction === 'horizontal') {
@@ -127,11 +98,44 @@ export default function Gameboard(rows = 10, cols = 10) {
     }
   }
 
+  function render(container) {
+    const gameboardEl = document.createElement('div');
+    gameboardEl.classList.add('gameboard');
+
+    for (let i = 0; i < rows; i++) {
+      const row = document.createElement('div');
+      row.classList.add('row');
+
+      for (let j = 0; j < cols; j++) {
+        const node = document.createElement('div');
+        node.classList.add('node');
+
+        if (isHitBefore([i, j])) {
+          node.classList.add('hit');
+        }
+
+        if (gameboard[i][j] instanceof Object) {
+          node.classList.add('ship');
+        }
+
+        if (gameboard[i][j] === 'missed') {
+          node.classList.add('missed');
+        }
+
+        row.appendChild(node);
+      }
+
+      gameboardEl.appendChild(row);
+    }
+
+    container.appendChild(gameboardEl);
+  }
+
   return {
     gameboard,
-    render,
+    getMissedAttacks: () => missedAttacks,
     placeShip,
     receiveAttack,
-    getMissedAttacks: () => missedAttacks,
+    render,
   };
 }

@@ -64,15 +64,14 @@ main {
   border: 1px solid var(--ship-color);
 }
 
-.missed {
+.hit {
   position: relative;
   overflow: hidden;
 }
 
-.missed::before {
+.hit::after {
   position: absolute;
   content: '×';
-  display: block;
   width: 100%;
   top: 50%;
   padding: 0;
@@ -80,5 +79,8 @@ main {
   line-height: 0;
   text-align: center;
   font-size: 3rem;
-  color: var(--gameboard-border-color);
+}
+
+.missed::after {
+  color: #d1d5db;
 }
