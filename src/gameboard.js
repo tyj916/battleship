@@ -116,6 +116,10 @@ export default function Gameboard(rows = 10, cols = 10) {
 
         if (gameboard[i][j] instanceof Object) {
           node.classList.add('ship');
+
+          if (gameboard[i][j].isSunk()) {
+            node.classList.add('sunk');
+          }
         }
 
         if (gameboard[i][j] === 'missed') {
