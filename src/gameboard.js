@@ -29,6 +29,10 @@ export default function Gameboard(rows = 10, cols = 10) {
           node.classList.add('ship');
         }
 
+        if (gameboard[i][j] === 'missed') {
+          node.classList.add('missed');
+        }
+
         row.appendChild(node);
       }
 

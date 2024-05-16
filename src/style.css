@@ -63,3 +63,22 @@ main {
   background-color: var(--ship-color);
   border: 1px solid var(--ship-color);
 }
+
+.missed {
+  position: relative;
+  overflow: hidden;
+}
+
+.missed::before {
+  position: absolute;
+  content: '×';
+  display: block;
+  width: 100%;
+  top: 50%;
+  padding: 0;
+  margin: 0;
+  line-height: 0;
+  text-align: center;
+  font-size: 3rem;
+  color: var(--gameboard-border-color);
+}
