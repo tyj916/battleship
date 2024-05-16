@@ -1,3 +1,8 @@
+:root {
+  --gameboard-border-color: #bfdbfe;
+  --ship-color: #60a5fa;
+}
+
 body {
   box-sizing: border-box;
   margin: 0;
@@ -11,10 +16,11 @@ body {
 header {
   width: 100%;
   border-bottom: 2px solid silver;
+  text-align: center;
 }
 
 header h1 {
-  margin-left: 16px;
+  margin: 32px;
 }
 
 main {
@@ -40,7 +46,7 @@ main {
   height: 300px;
   display: flex;
   flex-direction: column;
-  border: 2px solid skyblue;
+  border: 2px solid var(--gameboard-border-color);
 }
 
 .row {
@@ -50,5 +56,10 @@ main {
 
 .node {
   flex: 1;
-  border: 1px solid skyblue;
+  border: 1px solid var(--gameboard-border-color);
+}
+
+.ship {
+  background-color: var(--ship-color);
+  border: 1px solid var(--ship-color);
 }

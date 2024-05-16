@@ -7,6 +7,7 @@ export default function game() {
   const player2 = Player('Computer', 'computer');
 
   function render() {
+    player1.gameboard.placeShip(Ship(5), [1, 2]);
     player1.render();
     player2.render();
   }

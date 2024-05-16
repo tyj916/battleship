@@ -24,6 +24,11 @@ export default function Gameboard(rows = 10, cols = 10) {
       for (let j = 0; j < cols; j++) {
         const node = document.createElement('div');
         node.classList.add('node');
+
+        if (gameboard[i][j] instanceof Object) {
+          node.classList.add('ship');
+        }
+
         row.appendChild(node);
       }
 

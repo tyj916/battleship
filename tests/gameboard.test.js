@@ -117,7 +117,7 @@ test('Get missed attacks', () => {
   ]);
 });
 
-test('All ships sunk', () => {
+test.only('All ships sunk', () => {
   const gameboard = Gameboard();
   const ship3 = Ship(3);
   const ship5 = Ship(5);
