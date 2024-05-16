@@ -63,7 +63,7 @@ export default function Gameboard(rows = 10, cols = 10) {
     if (!isPathClear(shipLength, x, y, direction)) return;
 
     // if ship length is too long for the board
-    if (x + shipLength >= rows || y + shipLength >= cols) return;
+    if (x + shipLength > rows || y + shipLength > cols) return;
 
     for (let i = 0; i < shipLength; i++) {
       if (direction === 'horizontal') {
