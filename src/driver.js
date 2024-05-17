@@ -49,30 +49,43 @@ export default function game() {
     switchPlayer();
   }
 
-  function deactivateBoard() {
-    const currentBoard = (
+  function getTargetBoardElement() {
+    return (
       currentPlayer === player1
         ? document.querySelector('.player-2')
         : document.querySelector('.player-1')
     ).querySelector('.gameboard');
-    currentBoard.removeEventListener('click', hitTarget);
+  }
+
+  function deactivateBoard() {
+    const targetBoard = getTargetBoardElement();
+    targetBoard.removeEventListener('click', hitTarget);
   }
 
   function activateBoard() {
-    const targetBoard = (
-      currentPlayer === player1
-        ? document.querySelector('.player-2')
-        : document.querySelector('.player-1')
-    ).querySelector('.gameboard');
-
+    const targetBoard = getTargetBoardElement();
     targetBoard.classList.add('active');
-
     targetBoard.addEventListener('click', hitTarget);
   }
 
   function switchPlayer() {
     deactivateBoard();
     currentPlayer = currentPlayer === player1 ? player2 : player1;
+
+    while (currentPlayer.type === 'computer') {
+      const targetRow = Math.floor(Math.random() * 10);
+      const targetCol = Math.floor(Math.random() * 10);
+
+      const opponentGameboard =
+        currentPlayer === player1 ? player2.gameboard : player1.gameboard;
+
+      if (!opponentGameboard.isHitBefore([targetRow, targetCol])) {
+        opponentGameboard.receiveAttack([targetRow, targetCol]);
+        render();
+        switchPlayer();
+      }
+    }
+
     activateBoard();
   }
 

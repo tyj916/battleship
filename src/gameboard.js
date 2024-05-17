@@ -140,6 +140,7 @@ export default function Gameboard(rows = 10, cols = 10) {
   return {
     gameboard,
     getMissedAttacks: () => missedAttacks,
+    isHitBefore,
     placeShip,
     receiveAttack,
     render,
