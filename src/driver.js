@@ -30,23 +30,27 @@ export default function game() {
     player2.render(p2Container);
   }
 
-  function hitTarget(event) {
-    if (event.target.classList.contains('hit') || !event.target.dataset.row) {
+  function playRound(targetRow, targetCol) {
+    const targetBoard =
+      currentPlayer === player1 ? player2.gameboard : player1.gameboard;
+
+    if (!targetBoard.isHitBefore([targetRow, targetCol])) {
+      targetBoard.receiveAttack([targetRow, targetCol]);
+      render();
+      // eslint-disable-next-line no-use-before-define
+      switchPlayer();
+    }
+  }
+
+  function boardEventListener(event) {
+    if (!event.target.dataset.row || !event.target.dataset.col) {
       return;
     }
 
     const targetRow = +event.target.dataset.row;
     const targetCol = +event.target.dataset.col;
 
-    const targetBoard =
-      currentPlayer === player1 ? player2.gameboard : player1.gameboard;
-
-    targetBoard.receiveAttack([targetRow, targetCol]);
-
-    render();
-
-    // eslint-disable-next-line no-use-before-define
-    switchPlayer();
+    playRound(targetRow, targetCol);
   }
 
   function getTargetBoardElement() {
@@ -59,13 +63,13 @@ export default function game() {
 
   function deactivateBoard() {
     const targetBoard = getTargetBoardElement();
-    targetBoard.removeEventListener('click', hitTarget);
+    targetBoard.removeEventListener('click', boardEventListener);
   }
 
   function activateBoard() {
     const targetBoard = getTargetBoardElement();
     targetBoard.classList.add('active');
-    targetBoard.addEventListener('click', hitTarget);
+    targetBoard.addEventListener('click', boardEventListener);
   }
 
   function switchPlayer() {
@@ -76,14 +80,7 @@ export default function game() {
       const targetRow = Math.floor(Math.random() * 10);
       const targetCol = Math.floor(Math.random() * 10);
 
-      const opponentGameboard =
-        currentPlayer === player1 ? player2.gameboard : player1.gameboard;
-
-      if (!opponentGameboard.isHitBefore([targetRow, targetCol])) {
-        opponentGameboard.receiveAttack([targetRow, targetCol]);
-        render();
-        switchPlayer();
-      }
+      playRound(targetRow, targetCol);
     }
 
     activateBoard();
