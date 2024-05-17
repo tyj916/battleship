@@ -109,13 +109,11 @@ export default function Gameboard(rows = 10, cols = 10) {
       for (let j = 0; j < cols; j++) {
         const node = document.createElement('div');
         node.classList.add('node');
+        node.dataset.row = i;
+        node.dataset.col = j;
 
         if (isHitBefore([i, j])) {
           node.classList.add('hit');
-        } else {
-          node.addEventListener('click', () => {
-            receiveAttack([i, j]);
-          });
         }
 
         if (gameboard[i][j] instanceof Object) {

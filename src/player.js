@@ -3,28 +3,17 @@ import Gameboard from './gameboard';
 export default function Player(name, type = 'player') {
   const gameboard = Gameboard();
 
-  // cache DOM
-  const gameContainer = document.querySelector('.game-container');
-
-  function render() {
-    const playerContainer = document.createElement('div');
+  function render(container) {
     const gameboardContainer = document.createElement('div');
     const playerName = document.createElement('p');
 
-    gameboardContainer.addEventListener('click', () => {
-      gameboardContainer.textContent = '';
-      gameboard.render(gameboardContainer);
-    });
-
-    playerContainer.classList.add('player-container');
     gameboardContainer.classList.add('gameboard-container');
     playerName.classList.add('player-name');
 
     playerName.textContent = `Player: ${name}`;
 
-    gameContainer.appendChild(playerContainer);
-    playerContainer.appendChild(gameboardContainer);
-    playerContainer.appendChild(playerName);
+    container.appendChild(gameboardContainer);
+    container.appendChild(playerName);
 
     gameboard.render(gameboardContainer);
   }
