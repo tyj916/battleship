@@ -16,6 +16,10 @@ export default function game() {
     player1.gameboard.receiveAttack([4, 1]);
     player1.gameboard.receiveAttack([5, 1]);
     player1.render();
+
+    player2.gameboard.placeShip(Ship(5), [1, 2]);
+    player2.gameboard.placeShip(Ship(3), [3, 1], 'vertical');
+    player2.gameboard.placeShip(Ship(4), [6, 6], 'vertical');
     player2.render();
   }
 

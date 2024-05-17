@@ -112,6 +112,10 @@ export default function Gameboard(rows = 10, cols = 10) {
 
         if (isHitBefore([i, j])) {
           node.classList.add('hit');
+        } else {
+          node.addEventListener('click', () => {
+            receiveAttack([i, j]);
+          });
         }
 
         if (gameboard[i][j] instanceof Object) {
