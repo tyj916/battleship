@@ -31,8 +31,13 @@ export default function game() {
   }
 
   function hitTarget(event) {
+    if (event.target.classList.contains('hit') || !event.target.dataset.row) {
+      return;
+    }
+
     const targetRow = +event.target.dataset.row;
     const targetCol = +event.target.dataset.col;
+
     const targetBoard =
       currentPlayer === player1 ? player2.gameboard : player1.gameboard;
 
