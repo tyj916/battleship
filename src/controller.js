@@ -27,6 +27,7 @@ export default function gameController(
       : p1Container.querySelector('.gameboard');
   }
 
+  // activate opponent's board event listener according to current active player
   function activateBoard() {
     const targetBoardEl = getTargetBoardElement();
     targetBoardEl.classList.add('active', 'hide-ship');
@@ -110,6 +111,4 @@ export default function gameController(
   }
 
   render();
-
-  return {};
 }
