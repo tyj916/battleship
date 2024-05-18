@@ -65,7 +65,7 @@ export default function Gameboard(rows = 10, cols = 10) {
   function isAllShipsSunk() {
     for (let i = 0; i < gameboard.length; i++) {
       for (let j = 0; j < gameboard[i].length; j++) {
-        if (gameboard[i][j] instanceof Ship && !gameboard[i][j].isSunk()) {
+        if (gameboard[i][j] instanceof Object && !gameboard[i][j].isSunk()) {
           return false;
         }
       }
