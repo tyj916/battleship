@@ -70,6 +70,16 @@ main {
   border: 1px solid var(--gameboard-border-color);
 }
 
+.active .node:hover {
+  background-color: limegreen;
+  border-color: limegreen;
+}
+
+.active .node.hit:hover {
+  background-color: #ef4444;
+  border-color: #ef4444;
+}
+
 .ship,
 .hide-ship .ship.hit {
   background-color: var(--ship-color);
