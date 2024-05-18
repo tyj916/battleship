@@ -1,7 +1,7 @@
 import Player from './player';
 import Ship from './ship';
 
-export default function gameController(
+function gameController(
   playerOneName = 'Player 1',
   playerTwoName = 'Computer',
 ) {
@@ -14,43 +14,6 @@ export default function gameController(
   let activePlayer = player1;
   let message = `It's ${activePlayer.name}'s turn.`;
   let isGameover = false;
-
-  // cache DOM
-  const gameContainer = document.querySelector('.game-container');
-  const messageContainer = gameContainer.querySelector('.game-message');
-  const p1Container = gameContainer.querySelector('.player-container.player-1');
-  const p2Container = gameContainer.querySelector('.player-container.player-2');
-
-  function getTargetBoardElement() {
-    return activePlayer === player1
-      ? p2Container.querySelector('.gameboard')
-      : p1Container.querySelector('.gameboard');
-  }
-
-  // activate opponent's board event listener according to current active player
-  function activateBoard() {
-    const targetBoardEl = getTargetBoardElement();
-    targetBoardEl.classList.add('active', 'hide-ship');
-    targetBoardEl.addEventListener('click', (e) => {
-      const targetRow = +e.target.dataset.row;
-      const targetCol = +e.target.dataset.col;
-
-      // eslint-disable-next-line no-use-before-define
-      playRound(targetRow, targetCol);
-    });
-  }
-
-  function render() {
-    messageContainer.textContent = message;
-    p1Container.textContent = '';
-    p2Container.textContent = '';
-    player1.render(p1Container);
-    player2.render(p2Container);
-
-    if (!isGameover) {
-      activateBoard();
-    }
-  }
 
   function switchActivePlayer() {
     activePlayer = activePlayer === player1 ? player2 : player1;
@@ -73,7 +36,6 @@ export default function gameController(
   function announceWinner() {
     message += ` Last ship has been destroyed! The winner is ${activePlayer.name}!`;
     isGameover = true;
-    render();
   }
 
   function playRound(targetRow, targetCol) {
@@ -106,9 +68,61 @@ export default function gameController(
         computerPlayRound();
       }
     }
-
-    render();
   }
 
+  return {
+    getActivePlayer: () => activePlayer,
+    getPlayerOne: () => player1,
+    getPlayerTwo: () => player2,
+    getMessage: () => message,
+    isGameover: () => isGameover,
+    playRound,
+  };
+}
+
+export default function screenController() {
+  const controller = gameController();
+  const player1 = controller.getPlayerOne();
+  const player2 = controller.getPlayerTwo();
+
+  // cache DOM
+  const gameContainer = document.querySelector('.game-container');
+  const messageContainer = gameContainer.querySelector('.game-message');
+  const p1Container = gameContainer.querySelector('.player-container.player-1');
+  const p2Container = gameContainer.querySelector('.player-container.player-2');
+
+  function getTargetBoardElement() {
+    return controller.getActivePlayer() === player1
+      ? p2Container.querySelector('.gameboard')
+      : p1Container.querySelector('.gameboard');
+  }
+
+  // activate opponent's board event listener according to current active player
+  function activateBoard() {
+    const targetBoardEl = getTargetBoardElement();
+    targetBoardEl.classList.add('active', 'hide-ship');
+    targetBoardEl.addEventListener('click', (e) => {
+      const targetRow = +e.target.dataset.row;
+      const targetCol = +e.target.dataset.col;
+
+      controller.playRound(targetRow, targetCol);
+      // eslint-disable-next-line no-use-before-define
+      render();
+    });
+  }
+
+  function render() {
+    messageContainer.textContent = controller.getMessage();
+    p1Container.textContent = '';
+    p2Container.textContent = '';
+    player1.render(p1Container);
+    player2.render(p2Container);
+
+    if (!controller.isGameover()) {
+      activateBoard();
+    }
+  }
+
+  // init
   render();
 }
