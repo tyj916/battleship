@@ -13,6 +13,7 @@ export default function gameController(
 
   let activePlayer = player1;
   let message = `It's ${activePlayer.name}'s turn.`;
+  let isGameover = false;
 
   // cache DOM
   const gameContainer = document.querySelector('.game-container');
@@ -44,7 +45,10 @@ export default function gameController(
     p2Container.textContent = '';
     player1.render(p1Container);
     player2.render(p2Container);
-    activateBoard();
+
+    if (!isGameover) {
+      activateBoard();
+    }
   }
 
   function switchActivePlayer() {
@@ -65,16 +69,28 @@ export default function gameController(
     }
   }
 
+  function announceWinner() {
+    message += ` Last ship has been destroyed! The winner is ${activePlayer.name}!`;
+    isGameover = true;
+    render();
+  }
+
   function playRound(targetRow, targetCol) {
     const targetBoard = getTargetBoard();
 
-    if (!targetBoard.isHitBefore([targetRow, targetCol])) {
+    if (targetBoard.isHitBefore([targetRow, targetCol])) {
+      message = `This cell is selected before! Please try again, ${activePlayer.name}.`;
+    } else {
       const attackCondition = targetBoard.receiveAttack([targetRow, targetCol]);
 
       if (attackCondition === 'hit') {
         message = `${activePlayer.name} hit!`;
 
         if (targetBoard.gameboard[targetRow][targetCol].isSunk()) {
+          if (targetBoard.isAllShipsSunk()) {
+            announceWinner();
+            return;
+          }
           message += ` ${activePlayer.name} has destroyed a ship!`;
         }
       } else {
@@ -88,8 +104,6 @@ export default function gameController(
       if (activePlayer.type === 'computer') {
         computerPlayRound();
       }
-    } else {
-      message = `This cell is selected before! Please try again, ${activePlayer.name}.`;
     }
 
     render();
