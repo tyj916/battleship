@@ -1,4 +1,4 @@
 import './style.css';
-import game from './driver';
+import gameController from './controller';
 
-game();
+gameController();

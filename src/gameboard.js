@@ -73,7 +73,7 @@ export default function Gameboard(rows = 10, cols = 10) {
   }
 
   function receiveAttack(coordinate) {
-    if (isHitBefore(coordinate)) return;
+    if (isHitBefore(coordinate)) return 'hit before';
 
     hitCoordinate.push(coordinate);
 
@@ -83,9 +83,10 @@ export default function Gameboard(rows = 10, cols = 10) {
     if (gameboard[x][y] === null) {
       gameboard[x][y] = 'missed';
       missedAttacks.push(coordinate);
-    } else {
-      gameboard[x][y].hit();
+      return 'missed';
     }
+    gameboard[x][y].hit();
+    return 'hit';
   }
 
   function render(container) {

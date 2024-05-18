@@ -56,6 +56,10 @@ main {
   border: 2px solid var(--gameboard-border-color);
 }
 
+.gameboard.active {
+  border-color: limegreen;
+}
+
 .row {
   flex: 1;
   display: flex;
