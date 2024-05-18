@@ -55,6 +55,16 @@ export default function gameController(
     return activePlayer === player1 ? player2.gameboard : player1.gameboard;
   }
 
+  function computerPlayRound() {
+    while (activePlayer.type === 'computer') {
+      const targetRow = Math.floor(Math.random() * 10);
+      const targetCol = Math.floor(Math.random() * 10);
+
+      // eslint-disable-next-line no-use-before-define
+      playRound(targetRow, targetCol);
+    }
+  }
+
   function playRound(targetRow, targetCol) {
     const targetBoard = getTargetBoard();
 
@@ -74,6 +84,10 @@ export default function gameController(
       switchActivePlayer();
 
       message += ` It's ${activePlayer.name}'s turn.`;
+
+      if (activePlayer.type === 'computer') {
+        computerPlayRound();
+      }
     } else {
       message = `This cell is selected before! Please try again, ${activePlayer.name}.`;
     }
