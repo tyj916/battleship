@@ -74,10 +74,6 @@ export default function Gameboard(rows = 10, cols = 10) {
     return true;
   }
 
-  function reportAllShipsSunk() {
-    console.log('All ships sunk');
-  }
-
   function receiveAttack(coordinate) {
     if (isHitBefore(coordinate)) return;
 
@@ -91,10 +87,6 @@ export default function Gameboard(rows = 10, cols = 10) {
       missedAttacks.push(coordinate);
     } else {
       gameboard[x][y].hit();
-
-      if (gameboard[x][y].isSunk() && isAllShipsSunk()) {
-        reportAllShipsSunk();
-      }
     }
   }
 
@@ -141,6 +133,7 @@ export default function Gameboard(rows = 10, cols = 10) {
     gameboard,
     getMissedAttacks: () => missedAttacks,
     isHitBefore,
+    isAllShipsSunk,
     placeShip,
     receiveAttack,
     render,
