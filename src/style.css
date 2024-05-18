@@ -1,6 +1,7 @@
 :root {
   --gameboard-border-color: #bfdbfe;
   --ship-color: #60a5fa;
+  --light-grey-color: #d1d5db;
 }
 
 body {
@@ -59,9 +60,15 @@ main {
   border: 1px solid var(--gameboard-border-color);
 }
 
-.ship {
+.ship,
+.hide-ship .ship.hit {
   background-color: var(--ship-color);
   border: 1px solid var(--ship-color);
+}
+
+.hide-ship .ship {
+  background-color: inherit;
+  border: 1px solid var(--gameboard-border-color);
 }
 
 .hit {
@@ -82,10 +89,10 @@ main {
 }
 
 .missed::after {
-  color: #d1d5db;
+  color: var(--light-grey-color);
 }
 
-.sunk {
+.ship.hit.sunk {
   background-color: grey;
   border: 1px solid grey;
 }
