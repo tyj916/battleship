@@ -1,5 +1,3 @@
-import Ship from './ship';
-
 export default function Gameboard(rows = 10, cols = 10) {
   const gameboard = [];
   const hitCoordinate = [];
