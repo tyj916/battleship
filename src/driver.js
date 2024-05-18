@@ -30,6 +30,11 @@ export default function game() {
     player2.render(p2Container);
   }
 
+  function gameover() {
+    const winner = currentPlayer;
+    console.log(`All ships sunk! The winner is ${winner.name}`);
+  }
+
   function playRound(targetRow, targetCol) {
     const targetBoard =
       currentPlayer === player1 ? player2.gameboard : player1.gameboard;
@@ -37,6 +42,12 @@ export default function game() {
     if (!targetBoard.isHitBefore([targetRow, targetCol])) {
       targetBoard.receiveAttack([targetRow, targetCol]);
       render();
+
+      if (targetBoard.isAllShipsSunk()) {
+        gameover();
+        return;
+      }
+
       // eslint-disable-next-line no-use-before-define
       switchPlayer();
     }
@@ -68,7 +79,7 @@ export default function game() {
 
   function activateBoard() {
     const targetBoard = getTargetBoardElement();
-    targetBoard.classList.add('active');
+    targetBoard.classList.add('active', 'hide-ship');
     targetBoard.addEventListener('click', boardEventListener);
   }
 
