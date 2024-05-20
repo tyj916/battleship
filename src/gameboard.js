@@ -17,7 +17,7 @@ export default function Gameboard(rows = 10, cols = 10) {
         if (gameboard[x][y + i] !== null) return false;
       } else {
         // eslint-disable-next-line no-lonely-if
-        if (gameboard[x + i][y] !== null) return false;
+        if (gameboard[x + i] && gameboard[x + i][y] !== null) return false;
       }
     }
 

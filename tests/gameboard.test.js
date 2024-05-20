@@ -64,11 +64,14 @@ test('Collapse ship body', () => {
 test('Place ship vertically', () => {
   const gameboard = Gameboard();
   const ship3 = Ship(3);
+  const ship5 = Ship(5);
   gameboard.placeShip(ship3, [1, 2], 'vertical');
+  gameboard.placeShip(ship5, [9, 9], 'vertical');
 
   expect(gameboard.gameboard[1][2]).toEqual(ship3);
   expect(gameboard.gameboard[2][2]).toEqual(ship3);
   expect(gameboard.gameboard[3][2]).toEqual(ship3);
+  expect(gameboard.gameboard[9][9]).not.toEqual(ship5);
 });
 
 test('Receive attack at target empty coordinate', () => {
@@ -117,7 +120,7 @@ test('Get missed attacks', () => {
   ]);
 });
 
-test.only('All ships sunk', () => {
+test('All ships sunk', () => {
   const gameboard = Gameboard();
   const ship3 = Ship(3);
   const ship5 = Ship(5);
