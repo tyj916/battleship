@@ -76,6 +76,8 @@ export default function Gameboard(rows = 10, cols = 10) {
 
   function receiveAttack(coordinate) {
     if (isHitBefore(coordinate)) return 'hit before';
+    if (typeof coordinate[0] !== 'number' || typeof coordinate[1] !== 'number')
+      return 'NaN';
 
     hitCoordinate.push(coordinate);
 
