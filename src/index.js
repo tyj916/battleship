@@ -1,4 +1,4 @@
 import './style.css';
-import gameController from './controller';
+import screenController from './controller';
 
-gameController();
+screenController();
