@@ -1,6 +1,60 @@
 import Player from './player';
 import Ship from './ship';
 
+function createShips() {
+  return [
+    {
+      class: 'Carrier',
+      ship: Ship(5),
+    },
+    {
+      class: 'Battleship',
+      ship: Ship(4),
+    },
+    {
+      class: 'Destroyer',
+      ship: Ship(3),
+    },
+    {
+      class: 'Submarine',
+      ship: Ship(3),
+    },
+    {
+      class: 'Patrol Boat',
+      ship: Ship(2),
+    },
+  ];
+}
+
+function getRandomCoordinate() {
+  const targetRow = Math.floor(Math.random() * 10);
+  const targetCol = Math.floor(Math.random() * 10);
+
+  return [targetRow, targetCol];
+}
+
+function getRandomDirection() {
+  return Math.random() < 0.5 ? 'vertical' : 'horizontal';
+}
+
+function randomShipPlacement(player) {
+  const ships = createShips();
+  ships.forEach((ship) => {
+    let isPlaced = false;
+
+    while (!isPlaced) {
+      const randomCoordinate = getRandomCoordinate();
+      const randomDirection = getRandomDirection();
+
+      isPlaced = player.gameboard.placeShip(
+        ship.ship,
+        randomCoordinate,
+        randomDirection,
+      );
+    }
+  });
+}
+
 function gameController(
   playerOneName = 'Player 1',
   playerTwoName = 'Computer',
@@ -8,8 +62,8 @@ function gameController(
   const player1 = Player(playerOneName);
   const player2 = Player(playerTwoName, 'computer');
 
-  player1.gameboard.placeShip(Ship(5), [1, 2]);
-  player2.gameboard.placeShip(Ship(5), [1, 2]);
+  randomShipPlacement(player1);
+  randomShipPlacement(player2);
 
   let activePlayer = player1;
   let message = `It's ${activePlayer.name}'s turn.`;
@@ -25,8 +79,7 @@ function gameController(
 
   function computerPlayRound() {
     while (activePlayer.type === 'computer') {
-      const targetRow = Math.floor(Math.random() * 10);
-      const targetCol = Math.floor(Math.random() * 10);
+      const [targetRow, targetCol] = getRandomCoordinate();
 
       // eslint-disable-next-line no-use-before-define
       playRound(targetRow, targetCol);
