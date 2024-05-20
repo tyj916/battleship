@@ -30,13 +30,13 @@ export default function Gameboard(rows = 10, cols = 10) {
     const shipLength = ship.length;
 
     // if target coordinate out of board
-    if (x < 0 || x >= rows || y < 0 || y >= cols) return;
+    if (x < 0 || x >= rows || y < 0 || y >= cols) return false;
 
     // if target path has ship
-    if (!isPathClear(shipLength, x, y, direction)) return;
+    if (!isPathClear(shipLength, x, y, direction)) return false;
 
     // if ship length is too long for the board
-    if (x + shipLength > rows || y + shipLength > cols) return;
+    if (x + shipLength > rows || y + shipLength > cols) return false;
 
     for (let i = 0; i < shipLength; i++) {
       if (direction === 'horizontal') {
@@ -45,6 +45,8 @@ export default function Gameboard(rows = 10, cols = 10) {
         gameboard[x + i][y] = ship;
       }
     }
+
+    return true;
   }
 
   function isHitBefore(coordinate) {
